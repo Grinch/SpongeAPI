@@ -24,21 +24,12 @@
  */
 package org.spongepowered.api.event.item.inventory;
 
+import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.event.Cancellable;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 /**
- * Fires whenever the left and right slots of an anvil are filled
- * and a new result is computed.
- *
- * <p>Canceling this event prevents the vanilla behaviour and the
- * output is set to empty</p>
- *
- * <p>Changed costs only apply when the result is also set</p>
+ * Fires whenever the left and right slots of an anvil are filled and a new result is computed.
  */
 public interface UpdateAnvilEvent extends TargetInventoryEvent, Cancellable {
 
@@ -64,49 +55,52 @@ public interface UpdateAnvilEvent extends TargetInventoryEvent, Cancellable {
     ItemStackSnapshot getRight();
 
     /**
-     * Returns the custom result.
+     * Returns the transaction for the resulting item.
      *
-     * @return The custom result or {@link Optional#empty()} when not set
+     * @return The transaction for the resulting item.
      */
-    Optional<ItemStackSnapshot> getResult();
+    Transaction<ItemStackSnapshot> getItem();
 
     /**
-     * Sets the custom result. Use {@code null} to reset to vanilla behaviour.
+     * Returns the level cost.
      *
-     * @param item The custom result
-     */
-    void setResult(@Nullable ItemStackSnapshot item);
-
-    /**
-     * Returns the custom level cost.
-     *
-     * @return The custom level cost
+     * @return The level cost
      */
     int getLevelCost();
 
     /**
-     * Sets the custom level cost.
+     * Returns the original level cost.
      *
-     * <p>Only applies when the result was set.</p>
-     *
-     * @param cost The custom level cost
+     * @return The original level cost
      */
-    void setLevelCost(int cost);
+    int getOriginalLevelCost();
 
     /**
-     * Returns the custom material cost.
+     * Sets the level cost
      *
-     * @return The custom material cost
+     * @param levelCost The new level cost
+     */
+    void setLevelCost(int levelCost);
+
+    /**
+     * Returns the material cost.
+     *
+     * @return The material cost
      */
     int getMaterialCost();
 
     /**
-     * Sets the custom material cost.
+     * Returns the original material cost
      *
-     * <p>Only applies when the result was set.</p>
-     *
-     * @param cost The custom material cost
+     * @return The material cost
      */
-    void setMaterialCost(int cost);
+    int getOriginalMaterialCost();
+
+    /**
+     * Sets the material cost.
+     *
+     * @param materialCost The material cost
+     */
+    void setMaterialCost(int materialCost);
 
 }
